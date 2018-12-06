@@ -9,3 +9,4 @@ Conceptual model for the database that the app is going to use:
 
 
 Link to the protoype: 
+https://share.proto.io/6P8ZG1/
