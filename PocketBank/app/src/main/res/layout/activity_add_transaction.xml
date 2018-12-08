@@ -4,18 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.julijanjug.pocketbank.MainActivity"
+    tools:context="com.example.julijanjug.pocketbank.AddTransactionActivity"
     android:orientation="vertical">
 
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btn-add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/addTransaction" />
 
 </LinearLayout>

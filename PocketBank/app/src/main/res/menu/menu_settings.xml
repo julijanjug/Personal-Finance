@@ -4,6 +4,7 @@
         android:id="@+id/settings"
         android:icon="@drawable/ic_logout"
         app:iconTint="@android:color/white"
-        app:showAsAction="ifRoom|withText">
+        app:showAsAction="ifRoom|withText"
+        android:title="logout">
     </item>
 </menu>
