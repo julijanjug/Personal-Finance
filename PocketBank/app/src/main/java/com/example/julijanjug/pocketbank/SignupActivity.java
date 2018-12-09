@@ -15,10 +15,10 @@ public class SignupActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // set title of toolbar
-        getSupportActionBar().setTitle("Sign up");
-        // add back arrow to toolbar
         if (getSupportActionBar() != null){
+            // set title of toolbar
+            getSupportActionBar().setTitle("Sign up");
+            // add back arrow to toolbar
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
