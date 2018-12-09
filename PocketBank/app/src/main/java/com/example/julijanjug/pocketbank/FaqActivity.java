@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class FaqActivity extends AppCompatActivity {
 
@@ -21,6 +23,41 @@ public class FaqActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        TextView que1 = (TextView)findViewById(R.id.que1);
+        que1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView ans = findViewById(R.id.ans1);
+                if(ans.getVisibility() == View.GONE){
+                    ans.setVisibility(View.VISIBLE);
+                }else{
+                    ans.setVisibility(View.GONE);
+                }
+            }
+        });
+        TextView que2 = (TextView)findViewById(R.id.que2);
+        que2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView ans = findViewById(R.id.ans2);
+                if(ans.getVisibility() == View.GONE){
+                    ans.setVisibility(View.VISIBLE);
+                }else{
+                    ans.setVisibility(View.GONE);
+                }            }
+        });
+        TextView que3 = (TextView)findViewById(R.id.que3);
+        que3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView ans = findViewById(R.id.ans3);
+                if(ans.getVisibility() == View.GONE){
+                    ans.setVisibility(View.VISIBLE);
+                }else{
+                    ans.setVisibility(View.GONE);
+                }            }
+        });
     }
 
     @Override

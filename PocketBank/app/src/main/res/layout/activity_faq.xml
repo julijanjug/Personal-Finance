@@ -1,15 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.julijanjug.pocketbank.FaqActivity"
-    android:orientation="vertical">
+    tools:context="com.example.julijanjug.pocketbank.FaqActivity">
 
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <TextView
+            android:id="@+id/que1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryLight"
+            android:padding="10px"
+            android:text="Question1"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ans1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:text="Answer1"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/que2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:layout_marginTop="5px"
+            android:text="Question2"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimaryLight"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/ans2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:text="Answer2"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/que3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:layout_marginTop="5px"
+            android:text="Question3"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimaryLight"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/ans3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:text="Answer3"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
