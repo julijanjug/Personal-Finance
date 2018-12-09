@@ -20,7 +20,7 @@
 
 
         <EditText
-            android:id="@+id/input-email"
+            android:id="@+id/input_email"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:ems="10"
@@ -29,7 +29,7 @@
             android:theme="@style/MyEditTextTheme"/>
 
         <EditText
-            android:id="@+id/input-password"
+            android:id="@+id/input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

@@ -22,7 +22,7 @@
         app:layout_constraintWidth_percent="0.7">
 
         <EditText
-            android:id="@+id/input-email"
+            android:id="@+id/input_email1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -31,7 +31,7 @@
             android:theme="@style/MyEditTextTheme"/>
 
         <EditText
-            android:id="@+id/input-password1"
+            android:id="@+id/input_password1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -40,7 +40,7 @@
             android:theme="@style/MyEditTextTheme"/>
 
         <EditText
-            android:id="@+id/input-password2"
+            android:id="@+id/input_password2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
