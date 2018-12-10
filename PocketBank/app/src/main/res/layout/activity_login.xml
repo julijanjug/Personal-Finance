@@ -19,6 +19,17 @@
         app:layout_constraintWidth_percent="0.7">
 
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="80px"
+            android:text="PocketBank"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/input_email"
             android:layout_width="match_parent"
