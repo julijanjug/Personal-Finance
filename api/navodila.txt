@@ -1,0 +1,8 @@
+Navodila za uporabo in testiranje apija:
+-odpri terminal v mapi “api”
+-poženi ukaz “npm install” (mogoče na windowsih malo drugače)
+-poženi ukaz index.js -> server teče na localhost:7000
+
+testiranje:
+-za testiranje priporočam aplikacijo Postman
+-priložu sm tudi eno datoteko ki vsebuje template api klicev. To lahko uvozite v postman in stestirate klice

@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "9542b923-7003-49d6-9c68-704a8974f665",
+		"name": "pocketbank",
+		"description": "Vsi odgovori na zahtevke vrnejo json, ki vsebuje vsaj \"success\" (boolean, ki pove ali je bil zahtevek uspešno sprocesiran ali ne). Če je success \"false\", mora odgovor vsebovati tudi \"message\", ki opisuje napako.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "my@email.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "mypassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:7000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "Zahtevek login mora vrnit nic."
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "my@email.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "mypassword",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:7000/register",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"register"
+					]
+				},
+				"description": "Vrne samo \"success\" in \"message\" ob neuspehu."
+			},
+			"response": []
+		}],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1a7af48c-c8f1-44f7-a080-f3074b37fc38",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d9175221-8ef8-4d2e-a314-cc999a61a1c8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
