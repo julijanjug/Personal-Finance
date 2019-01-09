@@ -22,11 +22,11 @@
         app:layout_constraintWidth_percent="0.7">
 
         <EditText
-            android:id="@+id/input_email1"
+            android:id="@+id/input_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/email"
+            android:hint="Username"
             android:inputType="textPersonName"
             android:theme="@style/MyEditTextTheme"/>
 

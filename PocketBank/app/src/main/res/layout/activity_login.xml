@@ -29,13 +29,15 @@
             android:textColor="@color/colorPrimary"
             android:textSize="40sp"
             android:textStyle="bold" />
+        android:layout_height="wrap_content"
+
 
         <EditText
-            android:id="@+id/input_email"
+            android:id="@+id/input_username"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:ems="10"
-            android:hint="@string/email"
+            android:hint="Username"
             android:inputType="textPersonName"
             android:theme="@style/MyEditTextTheme"/>
 
