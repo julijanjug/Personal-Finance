@@ -25,7 +25,7 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Balance: -420.69€"
+            android:text="Balance: -420.69"
             android:textSize="25sp" />
 
         <com.jjoe64.graphview.GraphView

@@ -27,60 +27,102 @@
             android:layout_weight="1"
             android:background="@color/colorPrimaryLight"
             android:padding="10px"
-            android:text="Question1"
+            android:text="How do I use this app?"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/ans1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:padding="10px"
-            android:text="Answer1"
-            android:visibility="gone"/>
+            android:text="If you already have an account, log in to begin using your account. If you do not have an account, create a new one with sign up!"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/que2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_weight="1"
-            android:padding="10px"
             android:layout_marginTop="5px"
-            android:text="Question2"
-            android:textColor="@android:color/white"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryLight"
-            android:textSize="18sp"/>
+            android:padding="10px"
+            android:text="How do I start managing my finances?"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/ans2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:padding="10px"
-            android:text="Answer2"
-            android:visibility="gone"/>
+            android:text="To begin, you need to create an account to track your finances. You can create your new account in the settings!"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/que3"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_weight="1"
-            android:padding="10px"
             android:layout_marginTop="5px"
-            android:text="Question3"
-            android:textColor="@android:color/white"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryLight"
-            android:textSize="18sp"/>
+            android:padding="10px"
+            android:text="How do I add funds to my account?"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/ans3"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_weight="1"
             android:padding="10px"
-            android:text="Answer3"
-            android:visibility="gone"/>
+            android:text="You can add funds to your account by using the &quot;Add Transaction&quot; button. You can add/subtract the wanted amount and  select it's category. "
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/que4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryLight"
+            android:padding="10px"
+            android:text="What do the notifications do?"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ans4"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:text='In "Settings", you can select your daily and monthly limit. If you have notifications enabled, the app will give you a notification, if you should be close to crossing your limit.'
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/que5"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="5px"
+            android:layout_weight="1"
+            android:background="@color/colorPrimaryLight"
+            android:padding="10px"
+            android:text="If my account has one default currency, can I transfer funds of other currencies?"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ans5"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:padding="10px"
+            android:text='Yes. If your account is in "EUR" by default for instance, you can still transfer "USD" for instance. The funds will be converted to "EUR" accordingly. '
+            android:visibility="gone" />
 
     </LinearLayout>
 

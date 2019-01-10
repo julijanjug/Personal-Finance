@@ -10,6 +10,13 @@
         <item>EUR</item>
         <item>USD</item>
         <item>GBP</item>
+        <item>AUD</item>
+        <item>JPY</item>
+        <item>CZK</item>
+        <item>HRK</item>
+        <item>HUF</item>
+        <item>JMD</item>
+        <item>RUB</item>
     </string-array>
     <string-array name="transaction_type_array">
         <item>Expense</item>

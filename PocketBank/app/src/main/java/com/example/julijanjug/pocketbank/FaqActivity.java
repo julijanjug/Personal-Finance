@@ -58,6 +58,31 @@ public class FaqActivity extends AppCompatActivity {
                     ans.setVisibility(View.GONE);
                 }            }
         });
+
+        TextView que4 = (TextView)findViewById(R.id.que4);
+        que4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView ans = findViewById(R.id.ans4);
+                if(ans.getVisibility() == View.GONE){
+                    ans.setVisibility(View.VISIBLE);
+                }else{
+                    ans.setVisibility(View.GONE);
+                }            }
+        });
+        TextView que5 = (TextView)findViewById(R.id.que5);
+        que5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView ans = findViewById(R.id.ans5);
+                if(ans.getVisibility() == View.GONE){
+                    ans.setVisibility(View.VISIBLE);
+                }else{
+                    ans.setVisibility(View.GONE);
+                }            }
+        });
+
+
     }
 
     @Override
