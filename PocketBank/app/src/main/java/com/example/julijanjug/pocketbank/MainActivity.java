@@ -66,30 +66,15 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         TextView currency_text = (TextView) findViewById(R.id.textView6);
         SharedPreferences sp = getSharedPreferences("currency",MODE_PRIVATE);
-        SharedPreferences send_currency = getSharedPreferences("poslana_trenutna_valuta",MODE_PRIVATE);
 
-        //String trenutna_valuta = current_currency.getString("current_currency", "");
-        String trenutna_valuta = send_currency.getString("poslana_trenutna_valuta", "EUR");
-
-        //SPREMENI TRENUTNO STANJE NA STANJE IZ BAZE, ZEJ DELA KOT DA BI VEDNO MEL 100 TRENUTNE VALUTE
         int trenutno_stanje = 100;
-        String zelena_valuta = sp.getString("currency", "EUR");
-        int is_it_euro = 0;
+        String valuta = sp.getString("currency", "EUR");
 
-        if (sp.getString("currency", "").equals("EUR")){
-            is_it_euro = 1;
-        }
-        else{
-            is_it_euro = 0;
-        }
-
-        String izracunano = currency_kalkulator(trenutna_valuta, trenutno_stanje, zelena_valuta, is_it_euro);
-        currency_text.setText("Balance:" + " " + izracunano + " " + sp.getString("currency", ""));
+        String izracunano = currency_kalkulator(trenutno_stanje, valuta);
+        currency_text.setText("Balance:" + " " + izracunano + " " + valuta);
     }
 
-    public String currency_kalkulator(String trenutna_valuta, int trenutno_stanje, String zelena_valuta, int je_evro){
-        double pretvorjeno_v_evro = 0;
-        double pretvorjeno_v_zeleno = 0;
+    public String currency_kalkulator(float trenutno_stanje, String valuta){
 
         TreeMap<String,Double> konverzije_euro = new TreeMap<String,Double>();
         konverzije_euro.put("EUR",1.00000);
@@ -103,23 +88,8 @@ public class MainActivity extends AppCompatActivity {
         konverzije_euro.put("JMD",146.211);
         konverzije_euro.put("RUB",76.8361);
 
-        double convert_value = konverzije_euro.get(trenutna_valuta);
-
-        if(je_evro == 0){
-            pretvorjeno_v_evro = trenutno_stanje / convert_value;
-            Toast.makeText(this,String.valueOf(pretvorjeno_v_evro),Toast.LENGTH_SHORT).show();
-            if(zelena_valuta.equals("EUR")){
-                return  String.valueOf(pretvorjeno_v_evro);
-            }
-            else{
-                pretvorjeno_v_zeleno = pretvorjeno_v_evro * konverzije_euro.get(zelena_valuta);
-                return String.valueOf(pretvorjeno_v_zeleno);
-            }
-        }
-        else{
-            pretvorjeno_v_zeleno = trenutno_stanje * konverzije_euro.get(zelena_valuta);
-            return String.valueOf(pretvorjeno_v_zeleno);
-        }
+        double convertion = konverzije_euro.get(valuta);
+        return String.format("%.2f", convertion * trenutno_stanje);
     }
 
     @Override
