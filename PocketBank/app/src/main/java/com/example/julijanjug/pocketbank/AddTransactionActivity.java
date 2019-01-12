@@ -126,8 +126,8 @@ public class AddTransactionActivity extends AppCompatActivity {
             SharedPreferences sp = getSharedPreferences("logged", MODE_PRIVATE);
             int user_id = sp.getInt("user_id", 0);
             if (amount != 0) {
-                String[] columns = {"TransValue", "Note", "Date_Of_Transaction", "User_ID"};
-                String[] values = {Double.toString(amount), note, getCurrentDate(), Integer.toString(user_id)};
+                String[] columns = {"TransValue", "Note", "Date_Of_Transaction", "User_ID", "Account_ID"};
+                String[] values = {Double.toString(amount), note, getCurrentDate(), Integer.toString(user_id), Integer.toString(sp.getInt("accID", 1))};
                 myDb.setTableName("Transactions");
                 myDb.insertDataSpecific(columns, values);
 

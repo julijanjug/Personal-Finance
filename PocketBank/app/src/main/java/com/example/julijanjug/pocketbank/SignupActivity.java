@@ -1,7 +1,6 @@
 package com.example.julijanjug.pocketbank;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
         }
         signingup = true;
 
-        username = (EditText) findViewById(R.id.input_username);
+        username = (EditText) findViewById(R.id.input_email1);
         password1 = (EditText) findViewById(R.id.input_password1);
         password2 = (EditText) findViewById(R.id.input_password2);
         Cursor res = myDb.getAllData();
@@ -78,7 +77,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         else if (password1.getText().toString().length() < 4){
-            Toast.makeText(this, "Your password must be atleast 4 characters long.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Your password must be at least 4 characters long.", Toast.LENGTH_SHORT).show();
             signingup = false;
             return;
         }
@@ -96,25 +95,15 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
                 else{
-                    myDb.setTableName("Users");
                     signingup = myDb.insertData(username.getText().toString(),password1.getText().toString());
                 }
             }
         }
         else{
-            myDb.setTableName("Users");
             signingup = myDb.insertData(username.getText().toString(),password1.getText().toString());
         }
 
-        int user_id = myDb.getUser(username.getText().toString());
-        SharedPreferences sp = getSharedPreferences("logged",MODE_PRIVATE);
-        sp.edit().putBoolean("logged",true).apply();
-        sp.edit().putString("username", username.getText().toString()).apply();
-        sp.edit().putInt("user_id", user_id).apply();
-
         startActivity(new Intent(SignupActivity.this, MainActivity.class));
         signingup = false;
-
-
     }
 }

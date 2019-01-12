@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity{
         sp.edit().putInt("user_id", user_id).apply();
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         loggingIn = false;
-        }
-
-
     }
+
+
+}

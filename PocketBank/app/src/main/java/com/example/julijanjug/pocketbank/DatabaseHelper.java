@@ -2,7 +2,6 @@ package com.example.julijanjug.pocketbank;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,8 +15,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static String DATABASE_NAME = "pocketBank.db";
@@ -26,14 +23,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "PASSWORD";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 6);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         try{
             db.execSQL("PRAGMA foreign_keys = 1;");
-            db.execSQL("create table Account(_id integer primary key autoincrement, User_ID integer, Bank_ID integer, Name text, Balance real, foreign key (User_ID) references Users(_id),foreign key (Bank_ID) references Banks(_id));");
+            db.execSQL("create table Account(_id integer primary key autoincrement, User_ID integer, Bank_ID integer, Name text, Balance real, Description text, foreign key (User_ID) references Users(_id),foreign key (Bank_ID) references Banks(_id));");
             db.execSQL("create table Bank(_id integer primary key autoincrement, Name text);");
             db.execSQL("create table Transactions(_id integer primary key autoincrement, Account_ID integer, TransValue real, Date_Of_Transaction text, Note text, User_ID integer, foreign key (User_ID) references Users(_id),foreign key (Account_ID) references Account(_id));");
             db.execSQL("create table Users(_id integer primary key autoincrement, Username text, Password text);");
@@ -103,6 +100,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Sets the name for the table
+    public void setTableName(String tableName){
+        TABLE_NAME = tableName;
+    }
+
     public void updateTransaction(long id, double amount, String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues editTransaction = new ContentValues();
@@ -113,11 +115,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         close();
     }
 
-    public Cursor getUserTransaction(int user_id){
+    public Cursor getUserTransaction(int user_id, int accID){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res=null;
         try{
-            String query="SELECT _id,DATE(Date_Of_Transaction) AS date, TransValue AS value, Note AS note FROM Transactions WHERE User_ID = "+ user_id;
+            String query="SELECT _id,DATE(Date_Of_Transaction) AS date, TransValue AS value, Note AS note FROM Transactions WHERE User_ID = "+ user_id + " AND Account_ID = "+accID;
             res = db.rawQuery(query, null);
         }catch (Exception e){
             Log.d("NAPAKA_getUserTransacti",e.toString());
@@ -157,11 +159,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public float getUserBalance(int user_id){
+    public float getUserBalance(int user_id, int acc_id){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res=null;
         try{
-            res = db.query("Transactions",new String[]{"sum(TransValue)"}, "User_ID='"+user_id+"'", null, null, null,
+            res = db.query("Transactions",new String[]{"sum(TransValue)"}, "User_ID='"+user_id+"' AND Account_ID='"+acc_id+"'", null, null, null,
                     null );
         }catch (Exception e){
             Log.d("NAPAKA_getUserBalance",e.toString());
@@ -252,8 +254,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //Sets the name for the table
-    public void setTableName(String tableName){
-        TABLE_NAME = tableName;
+    public boolean deleteAccount(String accName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return db.delete(TABLE_NAME, "Name=?",new String[] {accName})>0;
     }
 }
