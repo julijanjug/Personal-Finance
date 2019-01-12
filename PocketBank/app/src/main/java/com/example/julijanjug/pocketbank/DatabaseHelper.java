@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res=null;
         try{
-            String query="SELECT _id,DATE(Date_Of_Transaction) AS date, TransValue AS value, Note AS note FROM Transactions WHERE User_ID = "+ user_id + " AND Account_ID = "+accID;
+            String query="SELECT _id,Date_Of_Transaction AS date, TransValue AS value, Note AS note FROM Transactions WHERE User_ID = "+ user_id + " AND Account_ID = "+accID +" ORDER BY Date_Of_Transaction DESC";
             res = db.rawQuery(query, null);
         }catch (Exception e){
             Log.d("NAPAKA_getUserTransacti",e.toString());

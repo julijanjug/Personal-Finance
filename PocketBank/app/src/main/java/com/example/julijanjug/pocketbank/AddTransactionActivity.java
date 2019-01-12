@@ -13,13 +13,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TreeMap;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
-    Spinner spinner; //category
     Spinner spinner2; //currencies
     Spinner spinner3; //transaction type
     EditText TEamount;
@@ -36,6 +38,8 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         TEamount = (EditText) findViewById(R.id.editText);
         TEnote = (EditText) findViewById(R.id.editText2);
+        spinner2 = (Spinner) findViewById(R.id.spinner2);
+        spinner3 = (Spinner) findViewById(R.id.spinner3);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,11 +52,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         }
 
         //Setup all spinners
-        spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.category_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
         spinner2 = (Spinner) findViewById(R.id.spinner2);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.currencies_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -63,7 +62,6 @@ public class AddTransactionActivity extends AppCompatActivity {
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(adapter3);
 
-        //še en spinner je treba z accounti napolnit
     }
     @Override
     protected void onResume() {
@@ -98,6 +96,24 @@ public class AddTransactionActivity extends AppCompatActivity {
         return true;
     }
 
+    public double currencyToEur(double value, String valuta){
+        TreeMap<String,Double> konverzije_euro = new TreeMap<String,Double>();
+        konverzije_euro.put("EUR",1.00000);
+        konverzije_euro.put("USD",1.14885);
+        konverzije_euro.put("GBP",0.90054);
+        konverzije_euro.put("AUD",1.60312);
+        konverzije_euro.put("JPY",124.77);
+        konverzije_euro.put("CZK",25.6293);
+        konverzije_euro.put("HRK",7.42337);
+        konverzije_euro.put("HUF",321.461);
+        konverzije_euro.put("JMD",146.211);
+        konverzije_euro.put("RUB",76.8361);
+
+        BigDecimal convertion = new BigDecimal(konverzije_euro.get(valuta));
+        BigDecimal value_big = new BigDecimal(value);
+        return value_big.divide(convertion, MathContext.DECIMAL32).doubleValue();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
@@ -123,9 +139,15 @@ public class AddTransactionActivity extends AppCompatActivity {
         if (getIntent().getExtras() == null) {
             double amount = Double.valueOf(TEamount.getText().toString());
             String note = TEnote.getText().toString();
+
             SharedPreferences sp = getSharedPreferences("logged", MODE_PRIVATE);
             int user_id = sp.getInt("user_id", 0);
             if (amount != 0) {
+                if(spinner3.getSelectedItem().toString().equals("Expense")){ //ali je expense ali income
+                    amount = -amount;
+                }
+                amount = currencyToEur(amount, spinner2.getSelectedItem().toString()); //pretvorba v evre
+
                 String[] columns = {"TransValue", "Note", "Date_Of_Transaction", "User_ID", "Account_ID"};
                 String[] values = {Double.toString(amount), note, getCurrentDate(), Integer.toString(user_id), Integer.toString(sp.getInt("accID", 1))};
                 myDb.setTableName("Transactions");

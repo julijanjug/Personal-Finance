@@ -36,46 +36,20 @@
             android:hint="Note"
             android:inputType="textPersonName" />
 
-        <LinearLayout
+        <Spinner
+            android:id="@+id/spinner2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="99dp"
-            android:paddingVertical="15px">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="50dp"/>
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <Spinner
+            android:id="@+id/spinner3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingVertical="15px">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="50dp"/>
 
-            <Spinner
-                android:id="@+id/spinner3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/spinner4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
 
     </LinearLayout>
 

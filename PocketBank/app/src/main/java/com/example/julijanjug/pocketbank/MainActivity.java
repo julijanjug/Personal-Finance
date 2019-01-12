@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
         listViewTransaction = (ListView) findViewById(R.id.listTransactions);
         listViewTransaction.setOnItemClickListener(viewTransactionListener);
 
-        String[] from = new String[]{"date", "note", "value"};
-        int[] to = new int[]{R.id.dateTextView, R.id.commentTextView, R.id.amountTextView};
+        String[] from = new String[]{"date", "value"};
+        int[] to = new int[]{R.id.dateTextView, R.id.amountTextView};
 
-        transactionAdapter = new SimpleCursorAdapter(MainActivity.this,
+        transactionAdapter = new MySimpleCursorAdapter(MainActivity.this,
                 R.layout.transaction_item, null, from, to, 0);
         listViewTransaction.setAdapter(transactionAdapter);
     }
