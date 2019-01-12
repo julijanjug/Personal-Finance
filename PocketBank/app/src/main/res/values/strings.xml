@@ -6,6 +6,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="addTransaction">Add transaction</string>
+    <string name="repassword">Re-enter password</string>
     <string-array name="currencies_array">
         <item>EUR</item>
         <item>USD</item>
