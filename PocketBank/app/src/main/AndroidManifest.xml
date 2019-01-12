@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -14,18 +17,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".IntermediateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LoginActivity" ></activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FaqActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".AddAccountActivity" />
         <activity android:name=".AddTransactionActivity"></activity>
+        <receiver android:name=".LimitNotification"></receiver>
+        <receiver android:name=".LimitNotificationMonth"></receiver>
+        <receiver android:name=".LimitReachedDaily"></receiver>
+        <receiver android:name=".LimitReachedMonthly"></receiver>
     </application>
 
 </manifest>
