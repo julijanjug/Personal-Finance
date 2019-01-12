@@ -16,10 +16,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 import java.io.StringReader;
 import java.lang.reflect.Array;
@@ -49,6 +51,16 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        Switch notificationsSwitch = (Switch) findViewById(R.id.notifications);
+        notificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences sp = getSharedPreferences("logged",MODE_PRIVATE);
+                if(isChecked)
+                    sp.edit().putBoolean("notifications",true).apply();
+                else
+                    sp.edit().putBoolean("notifications",false).apply();
+            }
+        });
         Button btnAdd = (Button) findViewById(R.id.add_account);
 
         //Sets an event listener for when the Create account button is clicked

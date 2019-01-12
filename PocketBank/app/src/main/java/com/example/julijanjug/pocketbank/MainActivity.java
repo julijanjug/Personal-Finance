@@ -132,28 +132,31 @@ public class MainActivity extends AppCompatActivity {
         String izracunano = currency_kalkulator(trenutno_stanje, valuta);
         currency_text.setText("Balance:" + " " + izracunano + " " + valuta);
 
+        boolean sendNotification=sp2.getBoolean("notifications", false);
+        if(sendNotification){
+            if(sp.getFloat("dailyLimit",0.0f)!=0.0f){
+                float dayLimit = sp.getFloat("dailyLimit", 0.0f);
+                float withOffSet = dayLimit-((float)10/100*dayLimit);
+                BigDecimal dailyLimit = new BigDecimal(dayLimit);
+                BigDecimal diffDaily = dailyLimit.subtract(new BigDecimal(izracunano));
+                if(Float.parseFloat(diffDaily.toString())<=0.0f)
+                    startNotificationReachedDaily(3000);
+                else if(Float.parseFloat(izracunano)>=withOffSet)
+                    startNotificationDaily(3000);
+            }
 
-        if(sp.getFloat("dailyLimit",0.0f)!=0.0f){
-            float dayLimit = sp.getFloat("dailyLimit", 0.0f);
-            float withOffSet = dayLimit-((float)10/100*dayLimit);
-            BigDecimal dailyLimit = new BigDecimal(dayLimit);
-            BigDecimal diffDaily = dailyLimit.subtract(new BigDecimal(izracunano));
-            if(Float.parseFloat(diffDaily.toString())<=0.0f)
-                startNotificationReachedDaily(3000);
-            else if(Float.parseFloat(izracunano)>=withOffSet)
-                startNotificationDaily(3000);
+            if(sp.getFloat("monthlyLimit",0.0f)!=0.0f){
+                float monthLimit = sp.getFloat("monthlyLimit", 0.0f);
+                float withOffSet = monthLimit-((float)10/100*monthLimit);
+                BigDecimal monthlyLimit = new BigDecimal(monthLimit);
+                BigDecimal diffMonthly = monthlyLimit.subtract(new BigDecimal(izracunano));
+                if(Float.parseFloat(diffMonthly.toString())<=0.0f)
+                    startNotificationReachedMonthly(3000);
+                if(Float.parseFloat(izracunano)>=withOffSet)
+                    startNotificationMonthly(3000);
+            }
         }
 
-        if(sp.getFloat("monthlyLimit",0.0f)!=0.0f){
-            float monthLimit = sp.getFloat("monthlyLimit", 0.0f);
-            float withOffSet = monthLimit-((float)10/100*monthLimit);
-            BigDecimal monthlyLimit = new BigDecimal(monthLimit);
-            BigDecimal diffMonthly = monthlyLimit.subtract(new BigDecimal(izracunano));
-            if(Float.parseFloat(diffMonthly.toString())<=0.0f)
-                startNotificationReachedMonthly(3000);
-            if(Float.parseFloat(izracunano)>=withOffSet)
-                startNotificationMonthly(3000);
-        }
 
         int user_id = sp2.getInt("user_id", 0);
         int acc_id = sp2.getInt("accID", 0);
