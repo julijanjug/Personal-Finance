@@ -17,20 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.*;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-
 public class LoginActivity extends AppCompatActivity{
 
     private boolean loggingIn = false;
@@ -76,10 +62,11 @@ public class LoginActivity extends AppCompatActivity{
         loggingIn = true;
 
         SharedPreferences sp = getSharedPreferences("logged",MODE_PRIVATE);
+        myDb.setTableName("Users");
         Cursor res = myDb.getAllData();
 
         boolean neobstaja = true;
-        EditText username = (EditText) findViewById(R.id.input_email);
+        EditText username = (EditText) findViewById(R.id.input_username);
         EditText password = (EditText) findViewById(R.id.input_password);
 
         if (username.getText().toString().isEmpty()) {
@@ -117,6 +104,15 @@ public class LoginActivity extends AppCompatActivity{
             }
         }
 
+        res = myDb.getAllData();
+        int user_id = -1;
+        while (res.moveToNext()) {
+            if(username.getText().toString().equals(res.getString(1))){
+                user_id = res.getInt(0);
+                break;
+            }
+        }
+        sp.edit().putInt("user_id", user_id).apply();
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         loggingIn = false;
         }

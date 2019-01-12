@@ -1,6 +1,7 @@
 package com.example.julijanjug.pocketbank;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -95,15 +96,25 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
                 else{
+                    myDb.setTableName("Users");
                     signingup = myDb.insertData(username.getText().toString(),password1.getText().toString());
                 }
             }
         }
         else{
+            myDb.setTableName("Users");
             signingup = myDb.insertData(username.getText().toString(),password1.getText().toString());
         }
 
+        int user_id = myDb.getUser(username.getText().toString());
+        SharedPreferences sp = getSharedPreferences("logged",MODE_PRIVATE);
+        sp.edit().putBoolean("logged",true).apply();
+        sp.edit().putString("username", username.getText().toString()).apply();
+        sp.edit().putInt("user_id", user_id).apply();
+
         startActivity(new Intent(SignupActivity.this, MainActivity.class));
         signingup = false;
+
+
     }
 }
