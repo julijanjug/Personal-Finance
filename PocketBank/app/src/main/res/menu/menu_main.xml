@@ -7,4 +7,16 @@
         app:showAsAction="ifRoom|withText"
         android:title="settings">
     </item>
+
+    <item
+        android:id="@+id/itemFivedays"
+        android:alphabeticShortcut="5"
+        android:title="5 days"
+        android:titleCondensed="5 days"/>
+
+    <item
+        android:id="@+id/itemTendays"
+        android:alphabeticShortcut="10"
+        android:title="10 days"
+        android:titleCondensed="10 days"/>
 </menu>

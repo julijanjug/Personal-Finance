@@ -2,29 +2,54 @@ package com.example.julijanjug.pocketbank;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.TreeMap;
+import com.example.julijanjug.pocketbank.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
+
+    String selected = "5 days";
+    ListView listViewTransaction;
+    CursorAdapter transactionAdapter;
+    DatabaseHelper myDb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDb = new DatabaseHelper(this);
+        myDb.insertTenDaysTestTransactions();
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -40,20 +65,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Graf
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
-        });
-        graph.addSeries(series);
+        //transaction list
+        listViewTransaction = (ListView) findViewById(R.id.listTransactions);
+        listViewTransaction.setOnItemClickListener(viewTransactionListener);
+
+        String[] from = new String[]{"date","note","value"};
+        int[] to = new int[]{R.id.dateTextView,R.id.commentTextView,R.id.amountTextView};
+
+        transactionAdapter = new SimpleCursorAdapter(MainActivity.this,
+                R.layout.transaction_item, null, from, to, 0);
+        listViewTransaction.setAdapter(transactionAdapter);
 
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    //clik event ob kliku na transakcijo v listView-u -> odpre se addTrasanction
+    AdapterView.OnItemClickListener viewTransactionListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            final Intent viewContact = new Intent(MainActivity.this, AddTransactionActivity.class);
+            viewContact.putExtra("_id",arg3);
+            startActivity(viewContact);
+        }
+    };
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setupGraph();
+
+        //setup conversion
+        TextView currency_text = (TextView) findViewById(R.id.textView6);
+        SharedPreferences sp = getSharedPreferences("currency",MODE_PRIVATE);
+        SharedPreferences sp2 = getSharedPreferences("logged", MODE_PRIVATE);
+
+        float trenutno_stanje = myDb.getUserBalance(sp2.getInt("user_id", 0));
+        String valuta = sp.getString("currency", "EUR");
+
+        String izracunano = currency_kalkulator(trenutno_stanje, valuta);
+        currency_text.setText("Balance:" + " " + izracunano + " " + valuta);
+
+        //Update listView
+        sp = getSharedPreferences("logged", MODE_PRIVATE);
+        int user_id = sp.getInt("user_id", 0);
+        transactionAdapter.changeCursor(myDb.getUserTransaction(user_id));
+    }
+
+    // Menu icons in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -61,21 +118,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        TextView currency_text = (TextView) findViewById(R.id.textView6);
-        SharedPreferences sp = getSharedPreferences("currency",MODE_PRIVATE);
-
-        int trenutno_stanje = 100;
-        String valuta = sp.getString("currency", "EUR");
-
-        String izracunano = currency_kalkulator(trenutno_stanje, valuta);
-        currency_text.setText("Balance:" + " " + izracunano + " " + valuta);
-    }
-
     public String currency_kalkulator(float trenutno_stanje, String valuta){
-
         TreeMap<String,Double> konverzije_euro = new TreeMap<String,Double>();
         konverzije_euro.put("EUR",1.00000);
         konverzije_euro.put("USD",1.14885);
@@ -92,13 +135,121 @@ public class MainActivity extends AppCompatActivity {
         return String.format("%.2f", convertion * trenutno_stanje);
     }
 
+    //akcije ob kliku na gumbe v toolbaru
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.settings) {
             startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             // open settings
+            return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.removeAllSeries();
+
+        switch (item.getItemId()) {
+            case R.id.itemFivedays:
+                selected="5 days";
+                setupGraph();
+                return super.onOptionsItemSelected(item);
+
+            case R.id.itemTendays:
+                selected="10 days";
+                setupGraph();
+                return super.onOptionsItemSelected(item);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    public void setupGraph() {
+        SharedPreferences sp2 = getSharedPreferences("logged", MODE_PRIVATE);
+        int user_id = sp2.getInt("user_id", 0);
+
+        Cursor cursor = null;
+        switch(selected) {
+            case "5 days" :  cursor = myDb.getGroupedSumTransactionsFiveDays(user_id);
+                break;
+            case "10 days":  cursor = myDb.getGroupedSumTransactionsTenDays(user_id);
+                break;
+        }
+        cursor.moveToFirst();
+
+        //date formater
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        //nardimo DataPoint z točkami ki se bojo prikazovale na grafu (podatke dobimo iz baze)
+        DataPoint[] dt = new DataPoint[cursor.getCount()];
+        for (int i=0; i<cursor.getCount(); i++){
+            try {
+                date = format.parse(cursor.getString(0));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dt[i] = new DataPoint(date, cursor.getInt(1));
+            cursor.moveToNext();
+        }
+
+        //Graph design
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dt);
+        series.setDrawBackground(true);
+        series.setBackgroundColor(Color.argb(80, 25, 118, 210));
+        series.setColor(Color.rgb(25, 118, 210));
+        series.setDrawDataPoints(true);
+        series.setDataPointsRadius(8);
+
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.addSeries(series);    //dodamo točke na graf
+        //for geting max amount of water
+        switch(selected) {
+            case "5 days" :  cursor = myDb.getMaxGroupedSumTransactionsFiveDays(user_id);
+                break;
+            case "10 days":  cursor = myDb.getMaxGroupedSumTransactionsTenDays(user_id);
+                break;
+        }
+        cursor.moveToFirst();
+        int max = cursor.getInt(0); //vemo koliko je maximalna količina vode in lahko nastavimo višino y-osi
+        graph.getViewport().setMaxY(max+50);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setYAxisBoundsManual(true);
+        //formatiramo oznake na y in x oseh
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    String myDateStr = new SimpleDateFormat("dd").format(new Date((new Double(value)).longValue()));
+                    if(myDateStr.substring(0,1).equals("0")){
+                        myDateStr=myDateStr.substring(1);
+                    }
+                    return myDateStr;
+                } else {
+                    // show ml on y values
+                    return super.formatLabel(value, isValueX);
+
+                }
+            }
+        });
+
+        graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 5  labels on x because of the space
+        Date maxX = new Date();
+        maxX.setHours(0);       //odrežemo ure in minute, pustimo samo datum da je graf lepši
+        maxX.setMinutes(0);
+        Date minX = new Date();
+        minX.setHours(0);
+        minX.setMinutes(0);
+        switch(selected) {
+            case "5 days" :  minX=myDb.subtractDays(maxX, 4);
+
+                break;
+            case "10 days":  minX=myDb.subtractDays(maxX, 9);
+                break;
+        }
+        //nastavim omejitve od kje do kje je X-os (odvisno al je izbran 5 ali 10 dni)
+        graph.getViewport().setMinX(minX.getTime());
+        graph.getViewport().setMaxX(maxX.getTime());
+        graph.getViewport().setXAxisBoundsManual(true);
     }
 }
