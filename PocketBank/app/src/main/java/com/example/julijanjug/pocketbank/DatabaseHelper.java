@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "PASSWORD";
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, DATABASE_NAME, null, 5);
+        super(context, DATABASE_NAME, null, 6);
     }
 
     @Override

@@ -122,14 +122,12 @@ public class AddTransactionActivity extends AppCompatActivity {
     private void saveTransaction() {
         if (getIntent().getExtras() == null) {
             double amount = Double.valueOf(TEamount.getText().toString());
+            String note = TEnote.getText().toString();
+            SharedPreferences sp = getSharedPreferences("logged", MODE_PRIVATE);
+            int user_id = sp.getInt("user_id", 0);
             if (amount != 0) {
-                String note = TEnote.getText().toString();
-                SharedPreferences sp = getSharedPreferences("logged", MODE_PRIVATE);
-                int user_id = sp.getInt("user_id", 0);
-
                 String[] columns = {"TransValue", "Note", "Date_Of_Transaction", "User_ID"};
-                String[] values = {Double.toString(amount), note, getCurrentDate(), Integer.toString(user_id)
-                };
+                String[] values = {Double.toString(amount), note, getCurrentDate(), Integer.toString(user_id)};
                 myDb.setTableName("Transactions");
                 myDb.insertDataSpecific(columns, values);
 
