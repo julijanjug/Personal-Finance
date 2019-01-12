@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDb = new DatabaseHelper(this);
-        myDb.insertTenDaysTestTransactions();
+        //myDb.insertTenDaysTestTransactions();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -174,6 +174,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "10 days":  cursor = myDb.getGroupedSumTransactionsTenDays(user_id);
                 break;
+        }
+        if(cursor.getCount() == 0){
+            return;
         }
         cursor.moveToFirst();
 
