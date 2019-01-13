@@ -38,7 +38,7 @@ public class MySimpleCursorAdapter extends SimpleCursorAdapter {
             text = currency_kalkulator(Float.parseFloat(text), valuta);
             v.setText(text+ " "+ valuta);
         }else if(v.getId() == R.id.dateTextView){
-            SimpleDateFormat df = new SimpleDateFormat("dd.MM. H:m");
+            SimpleDateFormat df = new SimpleDateFormat("dd.MM. H:mm");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             try {
                 v.setText(df.format(formatter.parse(text)));

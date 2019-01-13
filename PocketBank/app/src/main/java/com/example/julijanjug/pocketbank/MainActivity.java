@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -289,29 +290,13 @@ public class MainActivity extends AppCompatActivity {
         series.setDrawBackground(true);
         series.setBackgroundColor(Color.argb(80, 25, 118, 210));
         series.setColor(Color.rgb(25, 118, 210));
-        series.setDrawDataPoints(true);
+        //series.setDrawDataPoints(true);
         series.setDataPointsRadius(8);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.removeAllSeries();    //pobrišemo graf
         graph.addSeries(series);    //dodamo točke na graf
-        //for geting max amount of water
-        switch(selected) {
-            case "5 days" :  cursor = myDb.getMaxGroupedSumTransactionsFiveDays(user_id);
-                break;
-            case "10 days":  cursor = myDb.getMaxGroupedSumTransactionsTenDays(user_id);
-                break;
-        }
-        if(cursor.getCount() == 0){
-            return;
-        }
-
-        cursor.moveToFirst();
-        int max = cursor.getInt(0); //vemo koliko je maximalna količina vode in lahko nastavimo višino y-osi
-        graph.getViewport().setMaxY(max+50);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setYAxisBoundsManual(true);
-        //formatiramo oznake na y in x oseh
-        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {         //formatiramo oznake na y in x oseh
             @Override
             public String formatLabel(double value, boolean isValueX) {
                 if (isValueX) {
@@ -321,20 +306,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return myDateStr;
                 } else {
-                    // show ml on y values
                     return super.formatLabel(value, isValueX);
-
                 }
             }
         });
 
         graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 5  labels on x because of the space
         Date maxX = new Date();
-        maxX.setHours(0);       //odrežemo ure in minute, pustimo samo datum da je graf lepši
-        maxX.setMinutes(0);
         Date minX = new Date();
-        minX.setHours(0);
-        minX.setMinutes(0);
         switch(selected) {
             case "5 days" :  minX=myDb.subtractDays(maxX, 4);
 
