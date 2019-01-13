@@ -73,9 +73,10 @@ public class AddAccountActivity extends AppCompatActivity {
             EditText name = (EditText) findViewById(R.id.et_account);
             if(name.getText().toString().equals(""))
                 Toast.makeText(this, "You have to enter an account name!", Toast.LENGTH_SHORT).show();
-            else
+            else{
                 saveAccount();
                 finish();
+            }
             // confirm transaction and return to dashboard
         }
 
