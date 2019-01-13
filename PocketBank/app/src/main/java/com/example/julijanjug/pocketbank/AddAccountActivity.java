@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -69,8 +70,13 @@ public class AddAccountActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)
         }else if(item.getItemId() == R.id.confirm) {
-            saveAccount();
-            finish();
+            EditText name = (EditText) findViewById(R.id.et_account);
+            if(name.getText().toString().equals(""))
+                Toast.makeText(this, "You have to enter an account name!", Toast.LENGTH_SHORT).show();
+            else{
+                saveAccount();
+                finish();
+            }
             // confirm transaction and return to dashboard
         }
 

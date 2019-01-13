@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/password"
+            android:hint="@string/repassword"
             android:inputType="textPassword"
             android:theme="@style/MyEditTextTheme"/>
 
